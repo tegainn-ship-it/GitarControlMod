@@ -1,0 +1,46 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '1.0.23'
+}
+
+version = '1.0.0'
+group = 'ru.example.guitarchat'
+base { archivesName = 'guitarchat' }
+
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(21) }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.neoforged.net/releases' }
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content { includeGroup "maven.modrinth" }
+    }
+    // ВОТ ЭТО ДОБАВЬ:
+    maven {
+        name = "henkelmax"
+        url = "https://maven.maxhenkel.de/repository/public"
+    }
+}
+
+
+dependencies {
+    implementation "de.maxhenkel.voicechat:voicechat-api:2.4.0"
+}
+
+neoForge {
+    version = "21.1.77"
+    runs {
+        client { client() }
+    }
+    mods {
+        guitarchat { sourceSet(sourceSets.main) }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
